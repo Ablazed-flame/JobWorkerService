@@ -70,6 +70,7 @@ DistributedJobScheduler/
 => JobApiService (API + Authentication DB)
 
 => JobWorkerService (JobHistory DB)
+
 3. Apply Entity Framework migrations:
    ```bash
     dotnet ef database update
