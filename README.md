@@ -65,44 +65,36 @@ DistributedJobScheduler/
    ```bash
    git clone https://github.com/Ablazed-flame/JobWorkerService.git
    cd JobWorkerService
-Update the connection strings in appsettings.json for both:
+2. Update the connection strings in appsettings.json for both:
 
-JobApiService (API + Authentication DB)
+=> JobApiService (API + Authentication DB)
 
-JobWorkerService (JobHistory DB)
+=> JobWorkerService (JobHistory DB)
+3. Apply Entity Framework migrations:
+   ```bash
+    dotnet ef database update
+   ```
+4. Start the API service:
+   ```bash
+   dotnet run --project JobApiService
+   ```
+5. Start one or more worker services:
+   ```bash
+   dotnet run --project JobWorkerService
+   ```
+6. Submit a job via API (example using cURL):
+   ```bash
+   curl -X POST https://localhost:5001/api/jobs \
+   -H "Content-Type: application/json" \
+   -d '{
+    "jobType": "PrintJob",
+   "message": "Hello World!"
+   }'
+   ```
+7. Check job status/history:
+   ```bash
+   curl https://localhost:5001/api/jobs/{jobId}
+   ```
+   
 
-Apply Entity Framework migrations:
 
-bash
-Copy
-Edit
-dotnet ef database update
-Start the API service:
-
-bash
-Copy
-Edit
-dotnet run --project JobApiService
-Start one or more worker services:
-
-bash
-Copy
-Edit
-dotnet run --project JobWorkerService
-Submit a job via API (example using cURL):
-
-bash
-Copy
-Edit
-curl -X POST https://localhost:5001/api/jobs \
--H "Content-Type: application/json" \
--d '{
-  "jobType": "PrintJob",
-  "message": "Hello World!"
-}'
-Check job status/history:
-
-bash
-Copy
-Edit
-curl https://localhost:5001/api/jobs/{jobId}
