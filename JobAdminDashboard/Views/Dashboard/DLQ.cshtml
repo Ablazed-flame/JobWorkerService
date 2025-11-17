@@ -1,0 +1,35 @@
+﻿@model List<JobAdminDashboard.Models.DeadLetterJob>
+@{
+    ViewBag.Title = "Dead Letter Queue";
+}
+
+<h2>Dead Letter Queue</h2>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Type</th>
+            <th>Error</th>
+            <th>Failed At</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var job in Model)
+        {
+            <tr>
+                <td>@job.Id</td>
+                <td>@job.Type</td>
+                <td>@job.Error</td>
+                <td>@job.FailedAt.ToLocalTime()</td>
+                <td>
+                    <form asp-action="Requeue" method="post">
+                        <input type="hidden" name="id" value="@job.Id" />
+                        <button class="btn btn-sm btn-primary">Requeue</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
